@@ -1,0 +1,89 @@
+body {
+  font-family: sans-serif;
+  color: #504c5a;
+}
+
+.select-all {
+  text-indent: 0.625rem;
+}
+
+input:hover,
+button:hover {
+  cursor: pointer;
+}
+
+.button {
+  padding: 0.625rem;
+  display: inline-block;
+  font-size: 1.2rem;
+  background-color: none;
+}
+
+.select-all,
+.selected-count {
+  display: inline-block;
+  padding-right: 2rem;
+  font-size: 1.2rem;
+  padding-bottom: 0.625rem;
+  text-align: center;
+}
+
+.green {
+  color: #82cf34;
+}
+
+.table {
+  display: grid;
+  grid-template-columns: [col-start] auto [col-end];
+  grid-template-rows: [header-start] 50px [header-end row-start] auto [row-end];
+  grid-auto-rows: auto;
+  grid-auto-columns: auto;
+  grid-gap: 0;
+  overflow: hidden;
+  margin-top: 0.625rem;
+  border: 1px solid #dfdfdf;
+  border-radius: 0.1875rem;
+  -webkit-box-shadow: -1px -1px 5px -1px rgba(238, 238, 238, 1);
+  -moz-box-shadow: -1px -1px 5px -1px rgba(238, 238, 238, 1);
+  box-shadow: -1px -1px 5px -1px rgba(238, 238, 238, 1);
+}
+.table .heading {
+  position: relative;
+  padding: 1.25rem 0.625rem;
+}
+.table .row {
+  padding: 0.625rem;
+  position: relative;
+}
+
+.heading {
+  grid-row: header;
+  font-weight: bold;
+  vertical-align: middle;
+}
+
+.status {
+  text-transform: capitalize;
+}
+
+.status-icon {
+  text-align: right;
+  padding: 0;
+}
+
+.rowWrapper {
+  display: contents;
+}
+
+.rowWrapper div {
+  border-top: 1px solid #dfdfdf;
+}
+
+.rowWrapper.selected div {
+  background-color: #dfdfdf;
+}
+
+.rowWrapper:hover div {
+  background-color: #dfdfdf;
+  cursor: pointer;
+}
