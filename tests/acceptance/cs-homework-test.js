@@ -9,8 +9,6 @@ module("Acceptance | cs homework", function(hooks) {
     await visit("/");
 
     assert.equal(currentURL(), "/");
-    assert.dom("h2").hasText("Homework Assignment");
-
     assert.dom("a.button").hasText("Homework Assignment");
     await click("a.button");
     assert.equal(currentURL(), "/attachments");
