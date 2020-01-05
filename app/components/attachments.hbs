@@ -30,9 +30,9 @@
   {{#each @model as |file|}}
   <div class="rowWrapper {{if file.selected 'selected'}}" {{on "click" (fn this.selectRow file)}}>
     <div class="row"><Input @type="checkbox" @checked={{file.selected}} /></div>
-    <div class="row">{{file.name}}</div>
-    <div class="row">{{file.device}}</div>
-    <div class="row">{{file.path}}</div>
+    <div class="row name">{{file.name}}</div>
+    <div class="row device">{{file.device}}</div>
+    <div class="row path">{{file.path}}</div>
     <div class="row status-icon">
       {{#if (eq file.status "available")}}<FaIcon class="green" @icon="circle" />{{/if}}
     </div>
