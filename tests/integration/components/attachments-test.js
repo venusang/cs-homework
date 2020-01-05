@@ -5,44 +5,21 @@ import { hbs } from "ember-cli-htmlbars";
 
 module("Integration | Component | attachments", function(hooks) {
   setupRenderingTest(hooks);
-
-  test("it renders the content inside a list of attachments", async function(assert) {
+  test("it renders the default content inside a list of attachments", async function(assert) {
     await render(hbs`<Attachments/>`);
 
     assert.dom(".select-all").exists();
     assert.dom("#select-all").exists();
+    assert.dom("#select-all").isNotChecked();
     assert.dom(".selected-count").exists();
+    assert.dom(".selected-count").hasText("None Selected");
     assert.dom(".button").exists();
     assert.dom(".button").hasText("Download Selected");
+    assert.dom(".button").hasAttribute("disabled");
     assert.dom(".heading").exists();
   });
 
-  test("it renders None Selected by default", async function(assert) {
-    await render(hbs`<Attachments/>`);
-    this.setProperties({
-      file: [
-        {
-          name: "somefilename.exe",
-          device: "Device Name",
-          path: "\\ThisPath\\somefilename.exe",
-          status: "available",
-          selected: null
-        },
-        {
-          name: "somefilename2.exe",
-          device: "Device Name 2",
-          path: "\\ThisPath\\somefilename2.exe",
-          status: "available",
-          selected: null
-        }
-      ]
-    });
-
-    await render(hbs`<Attachments @model={{this.file}} />`);
-    assert.dom(".selected-count").hasText("None Selected");
-  });
-
-  test("it selects all files when the select all file input is selected and renders the number of files selected", async function(assert) {
+  test("it renders select all as checked when select all is clicked and the download button is no longer disabled", async function(assert) {
     await render(hbs`<Attachments/>`);
     this.setProperties({
       file: [
@@ -65,10 +42,12 @@ module("Integration | Component | attachments", function(hooks) {
 
     await render(hbs`<Attachments @model={{this.file}} />`);
     await click("#select-all");
+    assert.dom("#select-all").isChecked();
     assert.dom(".selected-count").hasText("Selected 2");
+    assert.dom(".button").hasNoAttribute("disabled");
   });
 
-  test("it renders the download button that is clickable when files are selected", async function(assert) {
+  test("it renders the download button as clickable when files are selected", async function(assert) {
     await render(hbs`<Attachments/>`);
     this.setProperties({
       file: [
