@@ -1,3 +1,4 @@
+<div class="download-controls">
   <Input
     @id="select-all"
     @type="checkbox"
@@ -5,18 +6,19 @@
     {{on "click" (fn this.selectAll @model)}}
   />
 
-<div class="selected-count">
-  {{#if (gt this.totalSelected 0)}}Selected {{this.totalSelected}}{{else}}None Selected{{/if}}
-</div>
+  <div class="selected-count">
+    {{#if (gt this.totalSelected 0)}}Selected {{this.totalSelected}}{{else}}None Selected{{/if}}
+  </div>
 
-<button
-  type="button"
-  class="download-button"
-  disabled={{this.isDisabled}}
-  {{on "click" (fn this.downloadSelected @model)}}
->
-  <FaIcon @icon="download" /> Download Selected
-</button>
+  <button
+    type="button"
+    class="download-button"
+    disabled={{this.isDisabled}}
+    {{on "click" (fn this.downloadSelected @model)}}
+  >
+    <FaIcon @icon="download" /> Download Selected
+  </button>
+</div>
 
 <div class="table">
   {{#each this.headers as |header|}}
@@ -24,7 +26,7 @@
   {{/each}}
 
   {{#each @model as |file|}}
-    <div class="row {{if file.selected 'selected'}}" {{on "click" (fn this.selectRow @model file)}}>
+    <div class="row {{if file.selected 'selected'}}" {{on "click" (fn this.selectRow @model file)}} role="button">
       <div class="cell"><Input @type="checkbox" @checked={{file.selected}} /></div>
       <div class="cell name">{{file.name}}</div>
       <div class="cell device">{{file.device}}</div>

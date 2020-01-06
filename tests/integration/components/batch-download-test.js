@@ -3,10 +3,10 @@ import { setupRenderingTest } from "ember-qunit";
 import { render, click } from "@ember/test-helpers";
 import { hbs } from "ember-cli-htmlbars";
 
-module("Integration | Component | Table", function(hooks) {
+module("Integration | Component | batch-download", function(hooks) {
   setupRenderingTest(hooks);
-  test("it renders the default content inside a Table", async function(assert) {
-    await render(hbs`<Table/>`);
+  test("it renders the default content inside the Batch Download", async function(assert) {
+    await render(hbs`<BatchDownload/>`);
 
     assert.dom("#select-all").exists();
     assert.dom("#select-all").isNotChecked();
@@ -18,17 +18,17 @@ module("Integration | Component | Table", function(hooks) {
   });
 
   test("it renders the Table headers", async function(assert) {
-    await render(hbs`<Table/>`);
+    await render(hbs`<BatchDownload/>`);
     this.setProperties({
       mockHeaders: ["Heading 1", "Heading 2", "Heading 3"]
     });
 
-    await render(hbs`<Table @headers={{this.mockHeaders}}/>`);
+    await render(hbs`<BatchDownload @headers={{this.mockHeaders}}/>`);
     assert.dom(".heading").exists();
   });
 
   test("it renders select all as checked when select all is clicked and the download button is no longer disabled", async function(assert) {
-    await render(hbs`<Table/>`);
+    await render(hbs`<BatchDownload/>`);
     this.setProperties({
       mockFiles: [
         {
@@ -48,7 +48,7 @@ module("Integration | Component | Table", function(hooks) {
       ]
     });
 
-    await render(hbs`<Table @model={{this.mockFiles}} />`);
+    await render(hbs`<BatchDownload @model={{this.mockFiles}} />`);
     await click("#select-all");
     assert.dom("#select-all").isChecked();
     assert.dom(".selected-count").hasText("Selected 2");
@@ -56,7 +56,7 @@ module("Integration | Component | Table", function(hooks) {
   });
 
   test("it renders the download button as clickable when files are selected", async function(assert) {
-    await render(hbs`<Table/>`);
+    await render(hbs`<BatchDownload/>`);
     this.setProperties({
       mockFiles2: [
         {
@@ -69,13 +69,13 @@ module("Integration | Component | Table", function(hooks) {
       ]
     });
 
-    await render(hbs`<Table @model={{this.mockFiles2}} />`);
+    await render(hbs`<BatchDownload @model={{this.mockFiles2}} />`);
     await click(".row");
     assert.dom(".download-button disabled").doesNotExist();
   });
 
-  test("it renders the details of a file that is available for download inside of Table", async function(assert) {
-    await render(hbs`<Table/>`);
+  test("it renders the details of a file that is available for download inside of Batch Download", async function(assert) {
+    await render(hbs`<BatchDownload/>`);
 
     this.setProperties({
       file: [
@@ -89,7 +89,7 @@ module("Integration | Component | Table", function(hooks) {
       ]
     });
 
-    await render(hbs`<Table @model={{this.file}} />`);
+    await render(hbs`<BatchDownload @model={{this.file}} />`);
     assert.dom(".row").exists();
     assert.dom(".cell").exists();
     assert.dom(".name").hasText("somefilename.exe");
@@ -103,7 +103,7 @@ module("Integration | Component | Table", function(hooks) {
   });
 
   test("it renders the details of a file that is not available for download inside of Table", async function(assert) {
-    await render(hbs`<Table/>`);
+    await render(hbs`<BatchDownload/>`);
 
     this.setProperties({
       file: [
@@ -117,7 +117,7 @@ module("Integration | Component | Table", function(hooks) {
       ]
     });
 
-    await render(hbs`<Table @model={{this.file}} />`);
+    await render(hbs`<BatchDownload @model={{this.file}} />`);
     assert.dom(".row").exists();
     assert.dom(".cell").exists();
     assert.dom(".name").hasText("somefilename2.exe");
@@ -131,7 +131,7 @@ module("Integration | Component | Table", function(hooks) {
   });
 
   test("it renders the details of a file that is not available for download inside of Table", async function(assert) {
-    await render(hbs`<Table/>`);
+    await render(hbs`<BatchDownload/>`);
 
     this.setProperties({
       file: [
@@ -145,7 +145,7 @@ module("Integration | Component | Table", function(hooks) {
       ]
     });
 
-    await render(hbs`<Table @model={{this.file}} />`);
+    await render(hbs`<BatchDownload @model={{this.file}} />`);
     assert.dom(".row").exists();
     assert.dom(".cell").exists();
     assert.dom(".name").hasText("somefilename2.exe");

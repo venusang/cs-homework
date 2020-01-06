@@ -2,7 +2,7 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { action, set } from "@ember/object";
 
-export default class TableComponent extends Component {
+export default class BatchDownloadComponent extends Component {
   constructor() {
     super(...arguments);
     this.headers = ["", "Name", "Device", "Path", "", "Status"];
