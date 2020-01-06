@@ -13,9 +13,9 @@ module("Integration | Component | attachments", function(hooks) {
     assert.dom("#select-all").isNotChecked();
     assert.dom(".selected-count").exists();
     assert.dom(".selected-count").hasText("None Selected");
-    assert.dom(".button").exists();
-    assert.dom(".button").hasText("Download Selected");
-    assert.dom(".button").hasAttribute("disabled");
+    assert.dom(".download-button").exists();
+    assert.dom(".download-button").hasText("Download Selected");
+    assert.dom(".download-button").hasAttribute("disabled");
     assert.dom(".heading").exists();
   });
 
@@ -44,7 +44,7 @@ module("Integration | Component | attachments", function(hooks) {
     await click("#select-all");
     assert.dom("#select-all").isChecked();
     assert.dom(".selected-count").hasText("Selected 2");
-    assert.dom(".button").hasNoAttribute("disabled");
+    assert.dom(".download-button").hasNoAttribute("disabled");
   });
 
   test("it renders the download button as clickable when files are selected", async function(assert) {
@@ -63,7 +63,7 @@ module("Integration | Component | attachments", function(hooks) {
 
     await render(hbs`<Attachments @model={{this.file}} />`);
     await click(".rowWrapper");
-    assert.dom(".button disabled").doesNotExist();
+    assert.dom(".download-button disabled").doesNotExist();
   });
 
   test("it renders the details of a file that is available for download inside of attachments", async function(assert) {
