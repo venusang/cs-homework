@@ -63,11 +63,7 @@ export default class AttachmentsComponent extends Component {
 
   selectAllStatus(model) {
     let checkbox = document.getElementById("select-all");
-    if (this.totalSelected === model.length) {
-      this.allSelected = true;
-    } else {
-      this.allSelected = false;
-    }
+    this.allSelected = !this.allSelected;
 
     if (this.totalSelected > 0) {
       this.isDisabled = false;
