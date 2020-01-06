@@ -5,7 +5,7 @@ import { action, set } from "@ember/object";
 export default class AttachmentsComponent extends Component {
   @tracked totalSelected = 0;
   @tracked allSelected = false;
-  @tracked disabled = true;
+  @tracked isDisabled = true;
 
   @action
   selectRow(model, file) {
@@ -70,9 +70,9 @@ export default class AttachmentsComponent extends Component {
     }
 
     if (this.totalSelected > 0) {
-      this.disabled = false;
+      this.isDisabled = false;
     } else {
-      this.disabled = true;
+      this.isDisabled = true;
     }
 
     if (this.totalSelected === model.length) {
