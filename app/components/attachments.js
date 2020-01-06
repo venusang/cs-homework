@@ -8,42 +8,31 @@ export default class AttachmentsComponent extends Component {
   @tracked disabled = true;
 
   @action
-  selectRow(file) {
-    let checkbox = document.getElementById("select-all");
+  selectRow(model, file) {
     if (file.selected) {
       this.totalSelected = this.totalSelected - 1;
       set(file, "selected", false);
-      if (this.totalSelected === 0) {
-        this.disabled = true;
-        this.allSelected = false;
-        checkbox.indeterminate = false;
-      } else {
-        checkbox.indeterminate = true;
-      }
     } else {
-      this.disabled = false;
       this.totalSelected = this.totalSelected + 1;
       set(file, "selected", true);
-      checkbox.indeterminate = true;
     }
+    this.selectAllStatus(model);
   }
+
   @action
   selectAll(model) {
     if (this.allSelected) {
       model.map(file => {
         set(file, "selected", false);
       });
-      this.disabled = true;
-      this.allSelected = false;
       this.totalSelected = 0;
     } else {
       model.map(file => {
         set(file, "selected", true);
       });
-      this.disabled = false;
-      this.allSelected = true;
       this.totalSelected = model.length;
     }
+    this.selectAllStatus(model);
   }
 
   @action
@@ -70,5 +59,30 @@ export default class AttachmentsComponent extends Component {
     message += `FILES READY FOR DOWNLOAD:\n${available}`;
     message += `FILES CURRENTLY UNAVAILABLE FOR DOWNLOAD:\n${unavailable}`;
     alert(message);
+  }
+
+  selectAllStatus(model) {
+    let checkbox = document.getElementById("select-all");
+    if (this.totalSelected === model.length) {
+      this.allSelected = true;
+    } else {
+      this.allSelected = false;
+    }
+
+    if (this.totalSelected > 0) {
+      this.disabled = false;
+    } else {
+      this.disabled = true;
+    }
+
+    if (this.totalSelected === model.length) {
+      checkbox.indeterminate = false;
+    }
+    if (this.totalSelected < model.length) {
+      checkbox.indeterminate = true;
+    }
+    if (this.totalSelected === 0) {
+      checkbox.indeterminate = false;
+    }
   }
 }

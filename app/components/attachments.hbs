@@ -28,7 +28,7 @@
   <div class="heading">Status</div>
 
   {{#each @model as |file|}}
-  <div class="rowWrapper {{if file.selected 'selected'}}" {{on "click" (fn this.selectRow file)}}>
+  <div class="rowWrapper {{if file.selected 'selected'}}" {{on "click" (fn this.selectRow @model file)}}>
     <div class="row"><Input @type="checkbox" @checked={{file.selected}} /></div>
     <div class="row name">{{file.name}}</div>
     <div class="row device">{{file.device}}</div>
