@@ -11,6 +11,6 @@ module("Acceptance | cs homework", function(hooks) {
     assert.equal(currentURL(), "/");
     assert.dom("a.button").hasText("View Homework Assignment");
     await click("a.button");
-    assert.equal(currentURL(), "/attachments");
+    assert.equal(currentURL(), "/downloads");
   });
 });

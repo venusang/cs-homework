@@ -2,7 +2,12 @@ import Component from "@glimmer/component";
 import { tracked } from "@glimmer/tracking";
 import { action, set } from "@ember/object";
 
-export default class AttachmentsComponent extends Component {
+export default class TableComponent extends Component {
+  constructor() {
+    super(...arguments);
+    this.headers = ["", "Name", "Device", "Path", "", "Status"];
+  }
+  headers = [];
   @tracked totalSelected = 0;
   @tracked allSelected = false;
   @tracked isDisabled = true;
@@ -21,17 +26,16 @@ export default class AttachmentsComponent extends Component {
 
   @action
   selectAll(model) {
-    if (this.allSelected) {
-      model.map(file => {
+    model.map(file => {
+      if (this.allSelected) {
         set(file, "selected", false);
-      });
-      this.totalSelected = 0;
-    } else {
-      model.map(file => {
+        this.totalSelected = 0;
+      } else {
         set(file, "selected", true);
-      });
-      this.totalSelected = model.length;
-    }
+        this.totalSelected = model.length;
+      }
+    });
+
     this.selectAllStatus(model);
   }
 
@@ -63,7 +67,6 @@ export default class AttachmentsComponent extends Component {
 
   selectAllStatus(model) {
     let checkbox = document.getElementById("select-all");
-    this.allSelected = !this.allSelected;
 
     if (this.totalSelected > 0) {
       this.isDisabled = false;
@@ -72,12 +75,15 @@ export default class AttachmentsComponent extends Component {
     }
 
     if (this.totalSelected === model.length) {
+      this.allSelected = true;
       checkbox.indeterminate = false;
     }
     if (this.totalSelected < model.length) {
+      this.allSelected = false;
       checkbox.indeterminate = true;
     }
     if (this.totalSelected === 0) {
+      this.allSelected = false;
       checkbox.indeterminate = false;
     }
   }

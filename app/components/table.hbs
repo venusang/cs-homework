@@ -1,0 +1,38 @@
+  <Input
+    @id="select-all"
+    @type="checkbox"
+    @checked={{this.allSelected}}
+    {{on "click" (fn this.selectAll @model)}}
+  />
+
+<div class="selected-count">
+  {{#if (gt this.totalSelected 0)}}Selected {{this.totalSelected}}{{else}}None Selected{{/if}}
+</div>
+
+<button
+  type="button"
+  class="download-button"
+  disabled={{this.isDisabled}}
+  {{on "click" (fn this.downloadSelected @model)}}
+>
+  <FaIcon @icon="download" /> Download Selected
+</button>
+
+<div class="table">
+  {{#each this.headers as |header|}}
+    <div class="heading">{{header}}</div>
+  {{/each}}
+
+  {{#each @model as |file|}}
+    <div class="row {{if file.selected 'selected'}}" {{on "click" (fn this.selectRow @model file)}}>
+      <div class="cell"><Input @type="checkbox" @checked={{file.selected}} /></div>
+      <div class="cell name">{{file.name}}</div>
+      <div class="cell device">{{file.device}}</div>
+      <div class="cell path">{{file.path}}</div>
+      <div class="cell status-icon">
+        {{#if (eq file.status "available")}}<FaIcon class="green" @icon="circle" />{{/if}}
+      </div>
+      <div class="cell status">{{file.status}}</div>
+    </div>
+  {{/each}}
+</div>

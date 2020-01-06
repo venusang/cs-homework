@@ -3,8 +3,8 @@ body {
   color: #504c5a;
 }
 
-.select-all {
-  text-indent: 0.625rem;
+#select-all {
+  margin-left: 0.625rem;
 }
 
 input:hover,
@@ -19,7 +19,7 @@ button:hover {
   background-color: none;
 }
 
-.select-all,
+#select-all,
 .selected-count {
   display: inline-block;
   padding-right: 2rem;
@@ -51,7 +51,7 @@ button:hover {
   position: relative;
   padding: 1.25rem 0.625rem;
 }
-.table .row {
+.table .cell {
   padding: 0.625rem;
   position: relative;
 }
@@ -71,19 +71,19 @@ button:hover {
   padding: 0;
 }
 
-.rowWrapper {
+.row {
   display: contents;
 }
 
-.rowWrapper div {
+.row div {
   border-top: 1px solid #dfdfdf;
 }
 
-.rowWrapper.selected div {
+.row.selected div {
   background-color: #dfdfdf;
 }
 
-.rowWrapper:hover div {
+.row:hover div {
   background-color: #dfdfdf;
   cursor: pointer;
 }
