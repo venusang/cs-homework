@@ -3,9 +3,9 @@ import { setupRenderingTest } from "ember-qunit";
 import { render, click } from "@ember/test-helpers";
 import { hbs } from "ember-cli-htmlbars";
 
-module("Integration | Component | table", function(hooks) {
+module("Integration | Component | Table", function(hooks) {
   setupRenderingTest(hooks);
-  test("it renders the default content inside a table", async function(assert) {
+  test("it renders the default content inside a Table", async function(assert) {
     await render(hbs`<Table/>`);
 
     assert.dom("#select-all").exists();
@@ -17,7 +17,7 @@ module("Integration | Component | table", function(hooks) {
     assert.dom(".download-button").hasAttribute("disabled");
   });
 
-  test("it renders the table headers", async function(assert) {
+  test("it renders the Table headers", async function(assert) {
     await render(hbs`<Table/>`);
     this.setProperties({
       mockHeaders: ["Heading 1", "Heading 2", "Heading 3"]
@@ -74,7 +74,7 @@ module("Integration | Component | table", function(hooks) {
     assert.dom(".download-button disabled").doesNotExist();
   });
 
-  test("it renders the details of a file that is available for download inside of attachments", async function(assert) {
+  test("it renders the details of a file that is available for download inside of Table", async function(assert) {
     await render(hbs`<Table/>`);
 
     this.setProperties({
@@ -102,7 +102,7 @@ module("Integration | Component | table", function(hooks) {
     assert.dom(".selected").exists();
   });
 
-  test("it renders the details of a file that is not available for download inside of attachments", async function(assert) {
+  test("it renders the details of a file that is not available for download inside of Table", async function(assert) {
     await render(hbs`<Table/>`);
 
     this.setProperties({
@@ -130,7 +130,7 @@ module("Integration | Component | table", function(hooks) {
     assert.dom(".selected").exists();
   });
 
-  test("it renders the details of a file that is not available for download inside of attachments", async function(assert) {
+  test("it renders the details of a file that is not available for download inside of Table", async function(assert) {
     await render(hbs`<Table/>`);
 
     this.setProperties({
