@@ -7,6 +7,24 @@ module("Integration | Component | batch-download", function(hooks) {
   setupRenderingTest(hooks);
   test("it renders the default content inside the Batch Download", async function(assert) {
     await render(hbs`<BatchDownload/>`);
+    this.setProperties({
+      mockFiles: [
+        {
+          name: "somefilename.exe",
+          device: "Device Name",
+          path: "\\ThisPath\\somefilename.exe",
+          status: "available"
+        },
+        {
+          name: "somefilename2.exe",
+          device: "Device Name 2",
+          path: "\\ThisPath\\somefilename2.exe",
+          status: "available"
+        }
+      ]
+    });
+
+    await render(hbs`<BatchDownload @model={{this.mockFiles}} />`);
 
     assert.dom("#select-all").exists();
     assert.dom("#select-all").isNotChecked();
@@ -15,19 +33,10 @@ module("Integration | Component | batch-download", function(hooks) {
     assert.dom(".download-button").exists();
     assert.dom(".download-button").hasText("Download Selected");
     assert.dom(".download-button").hasAttribute("disabled");
-  });
-
-  test("it renders the Table headers", async function(assert) {
-    await render(hbs`<BatchDownload/>`);
-    this.setProperties({
-      mockHeaders: ["Heading 1", "Heading 2", "Heading 3"]
-    });
-
-    await render(hbs`<BatchDownload @headers={{this.mockHeaders}}/>`);
     assert.dom(".heading").exists();
   });
 
-  test("it renders select all as checked when select all is clicked and the download button is no longer disabled", async function(assert) {
+  test("it renders select all as checked when select all is clicked", async function(assert) {
     await render(hbs`<BatchDownload/>`);
     this.setProperties({
       mockFiles: [
@@ -36,14 +45,14 @@ module("Integration | Component | batch-download", function(hooks) {
           device: "Device Name",
           path: "\\ThisPath\\somefilename.exe",
           status: "available",
-          selected: null
+          selected: true
         },
         {
           name: "somefilename2.exe",
           device: "Device Name 2",
           path: "\\ThisPath\\somefilename2.exe",
           status: "available",
-          selected: null
+          selected: true
         }
       ]
     });
@@ -51,8 +60,6 @@ module("Integration | Component | batch-download", function(hooks) {
     await render(hbs`<BatchDownload @model={{this.mockFiles}} />`);
     await click("#select-all");
     assert.dom("#select-all").isChecked();
-    assert.dom(".selected-count").hasText("Selected 2");
-    assert.dom(".download-button").hasNoAttribute("disabled");
   });
 
   test("it renders the download button as clickable when files are selected", async function(assert) {
@@ -74,63 +81,7 @@ module("Integration | Component | batch-download", function(hooks) {
     assert.dom(".download-button disabled").doesNotExist();
   });
 
-  test("it renders the details of a file that is available for download inside of Batch Download", async function(assert) {
-    await render(hbs`<BatchDownload/>`);
-
-    this.setProperties({
-      file: [
-        {
-          name: "somefilename.exe",
-          device: "Device Name",
-          path: "\\ThisPath\\somefilename.exe",
-          status: "available",
-          selected: null
-        }
-      ]
-    });
-
-    await render(hbs`<BatchDownload @model={{this.file}} />`);
-    assert.dom(".row").exists();
-    assert.dom(".cell").exists();
-    assert.dom(".name").hasText("somefilename.exe");
-    assert.dom(".device").hasText("Device Name");
-    assert.dom(".path").hasText("\\ThisPath\\somefilename.exe");
-    assert.dom(".status-icon .green").exists();
-    assert.dom(".status").hasText("available");
-
-    await click(".row");
-    assert.dom(".selected").exists();
-  });
-
-  test("it renders the details of a file that is not available for download inside of Table", async function(assert) {
-    await render(hbs`<BatchDownload/>`);
-
-    this.setProperties({
-      file: [
-        {
-          name: "somefilename2.exe",
-          device: "Device Name 2",
-          path: "\\ThisPath\\somefilename2.exe",
-          status: "scheduled",
-          selected: null
-        }
-      ]
-    });
-
-    await render(hbs`<BatchDownload @model={{this.file}} />`);
-    assert.dom(".row").exists();
-    assert.dom(".cell").exists();
-    assert.dom(".name").hasText("somefilename2.exe");
-    assert.dom(".device").hasText("Device Name 2");
-    assert.dom(".path").hasText("\\ThisPath\\somefilename2.exe");
-    assert.dom(".status-icon .green").doesNotExist();
-    assert.dom(".status").hasText("scheduled");
-
-    await click(".row");
-    assert.dom(".selected").exists();
-  });
-
-  test("it renders the details of a file that is not available for download inside of Table", async function(assert) {
+  test("it renders the details of a file that is not available for download", async function(assert) {
     await render(hbs`<BatchDownload/>`);
 
     this.setProperties({

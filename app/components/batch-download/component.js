@@ -8,12 +8,55 @@ export default class BatchDownloadComponent extends Component {
     this.headers = ["", "Name", "Device", "Path", "", "Status"];
   }
   headers = [];
+
   @tracked totalSelected = 0;
-  @tracked allSelected = false;
-  @tracked isDisabled = true;
+
+  get model() {
+    return this.args.model;
+  }
+
+  get modelLength() {
+    return this.args.modelLength;
+  }
+
+  get allSelected() {
+    if (this.totalSelected === this.modelLength) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+  get isDisabled() {
+    if (this.totalSelected > 0) {
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  get theTotal() {
+    let checkbox = document.getElementById("select-all");
+    if (this.totalSelected === this.modelLength) {
+      checkbox.indeterminate = false;
+      checkbox.checked = true;
+      return `Selected ${this.totalSelected}`;
+    }
+
+    if (this.totalSelected !== this.modelLength && this.totalSelected > 0) {
+      checkbox.indeterminate = true;
+      return `Selected ${this.totalSelected}`;
+    }
+
+    if (this.totalSelected === 0) {
+      checkbox.indeterminate = false;
+      checkbox.checked = false;
+      return `None Selected`;
+    }
+    return `None Selected`;
+  }
 
   @action
-  selectRow(model, file) {
+  selectRow(file) {
     if (file.selected) {
       this.totalSelected = this.totalSelected - 1;
       set(file, "selected", false);
@@ -21,30 +64,30 @@ export default class BatchDownloadComponent extends Component {
       this.totalSelected = this.totalSelected + 1;
       set(file, "selected", true);
     }
-    this.selectAllStatus(model);
   }
 
   @action
-  selectAll(model) {
-    model.map(file => {
-      if (this.allSelected) {
+  selectAll() {
+    let selectedFiles = this.model.filter(file => file.selected);
+    if (selectedFiles.length === this.modelLength) {
+      this.totalSelected = 0;
+      this.model.map(file => {
         set(file, "selected", false);
-        this.totalSelected = 0;
-      } else {
+      });
+    } else {
+      this.totalSelected = this.modelLength;
+      this.model.map(file => {
         set(file, "selected", true);
-        this.totalSelected = model.length;
-      }
-    });
-
-    this.selectAllStatus(model);
+      });
+    }
   }
 
   @action
-  downloadSelected(model) {
+  downloadSelected() {
     let message = "";
     let available = "";
     let unavailable = "";
-    let selectedFiles = model.filter(file => file.selected);
+    let selectedFiles = this.model.filter(file => file.selected);
     selectedFiles.map(file => {
       if (file.selected && file.status === "available") {
         available += `path:\t\t\t${file.path}\ndevice:\t\t\t${file.device}\n\n`;
@@ -63,28 +106,5 @@ export default class BatchDownloadComponent extends Component {
     message += `FILES READY FOR DOWNLOAD:\n${available}`;
     message += `FILES CURRENTLY UNAVAILABLE FOR DOWNLOAD:\n${unavailable}`;
     alert(message);
-  }
-
-  selectAllStatus(model) {
-    let checkbox = document.getElementById("select-all");
-
-    if (this.totalSelected > 0) {
-      this.isDisabled = false;
-    } else {
-      this.isDisabled = true;
-    }
-
-    if (this.totalSelected === model.length) {
-      this.allSelected = true;
-      checkbox.indeterminate = false;
-    }
-    if (this.totalSelected < model.length) {
-      this.allSelected = false;
-      checkbox.indeterminate = true;
-    }
-    if (this.totalSelected === 0) {
-      this.allSelected = false;
-      checkbox.indeterminate = false;
-    }
   }
 }
