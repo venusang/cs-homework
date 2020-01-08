@@ -20,18 +20,11 @@ export default class BatchDownloadComponent extends Component {
   }
 
   get allSelected() {
-    if (this.totalSelected === this.modelLength) {
-      return true;
-    } else {
-      return false;
-    }
+    return this.totalSelected === this.modelLength ? true : false;
   }
+
   get isDisabled() {
-    if (this.totalSelected > 0) {
-      return false;
-    } else {
-      return true;
-    }
+    return this.totalSelected > 0 ? false : true;
   }
 
   get theTotal() {
