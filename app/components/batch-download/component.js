@@ -33,19 +33,17 @@ export default class BatchDownloadComponent extends Component {
       checkbox.indeterminate = false;
       checkbox.checked = true;
       return `Selected ${this.totalSelected}`;
-    }
-
-    if (this.totalSelected !== this.modelLength && this.totalSelected > 0) {
+    } else if (
+      this.totalSelected !== this.modelLength &&
+      this.totalSelected > 0
+    ) {
       checkbox.indeterminate = true;
       return `Selected ${this.totalSelected}`;
-    }
-
-    if (this.totalSelected === 0) {
+    } else {
       checkbox.indeterminate = false;
       checkbox.checked = false;
       return `None Selected`;
     }
-    return `None Selected`;
   }
 
   @action
